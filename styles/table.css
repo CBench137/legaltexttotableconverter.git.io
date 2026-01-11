@@ -1,0 +1,355 @@
+/* ===========================
+   Table Styling
+   =========================== */
+
+.output-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.output-table thead {
+    background-color: #34495e;
+    color: white;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.output-table thead th {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #2c3e50;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.output-table tbody tr {
+    border-bottom: 1px solid #ecf0f1;
+    transition: background-color 0.2s ease;
+}
+
+.output-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.output-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.output-table tbody tr:nth-child(even):hover {
+    background-color: #e8eef5;
+}
+
+.output-table tbody td {
+    padding: 12px 15px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+/* Column Specific Styling */
+
+.col-number {
+    width: 80px;
+    text-align: center;
+    font-weight: 600;
+    background-color: #2c3e50;
+}
+
+.output-table tbody td.col-number {
+    text-align: center;
+    font-weight: 600;
+    background-color: rgba(44, 62, 80, 0.05);
+    color: #2c3e50;
+    width: 80px;
+}
+
+.col-content {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.output-table tbody td.col-content {
+    padding-left: 20px;
+}
+
+/* Empty Rows */
+
+.output-table tbody tr.empty-row td {
+    background-color: #faf3f1;
+}
+
+.output-table tbody tr.empty-row td.col-content {
+    color: #bdc3c7;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* Clause Number Highlighting */
+
+.output-table tbody tr.clause-number {
+    background-color: #ecf0f1;
+    font-weight: 600;
+}
+
+.output-table tbody tr.clause-number:hover {
+    background-color: #d9dedf;
+}
+
+.output-table tbody tr.clause-number td.col-content {
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+/* Leading Phrase Highlighting */
+
+.output-table tbody tr.leading-phrase {
+    background-color: #fef9e7;
+}
+
+.output-table tbody tr.leading-phrase:hover {
+    background-color: #fef3b8;
+}
+
+.output-table tbody tr.leading-phrase td.col-content {
+    color: #8b6914;
+    font-weight: 600;
+}
+
+/* Amendment Symbol Highlighting */
+
+.output-table tbody tr.amendment-clause {
+    background-color: #fef5e7;
+}
+
+.output-table tbody tr.amendment-clause:hover {
+    background-color: #fef0d1;
+}
+
+.output-table tbody tr.amendment-clause td.col-content {
+    color: #c0392b;
+    font-weight: 600;
+}
+
+/* Devanagari Text Support */
+
+.output-table .devanagari {
+    font-size: 1.05em;
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+}
+
+/* Table Wrapper */
+
+.table-wrapper {
+    border: 1px solid #ecf0f1;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+}
+
+.table-wrapper {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* Scrollbar Styling */
+
+.table-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+/* ===========================
+   Responsive Table
+   =========================== */
+
+@media (max-width: 768px) {
+    .output-table {
+        font-size: 0.85em;
+    }
+
+    .output-table thead th,
+    .output-table tbody td {
+        padding: 8px 10px;
+    }
+
+    .col-number {
+        width: 60px;
+    }
+
+    .output-table thead th.col-number,
+    .output-table tbody td.col-number {
+        padding: 8px 5px;
+        text-align: center;
+    }
+
+    .table-wrapper {
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .output-table {
+        font-size: 0.8em;
+    }
+
+    .output-table thead th,
+    .output-table tbody td {
+        padding: 6px 8px;
+    }
+
+    .col-number {
+        width: 50px;
+    }
+
+    .table-wrapper {
+        max-height: 300px;
+    }
+}
+
+/* ===========================
+   Print Styles
+   =========================== */
+
+@media print {
+    .table-wrapper {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .output-table {
+        page-break-inside: avoid;
+    }
+
+    .output-table tbody tr {
+        page-break-inside: avoid;
+    }
+
+    .action-buttons,
+    .input-section,
+    .app-header {
+        display: none;
+    }
+
+    .output-section {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+}
+
+/* ===========================
+   Dark Mode
+   =========================== */
+
+@media (prefers-color-scheme: dark) {
+    .output-table {
+        background-color: #34495e;
+        color: #ecf0f1;
+    }
+
+    .output-table thead {
+        background-color: #2c3e50;
+    }
+
+    .output-table thead th {
+        border-bottom-color: #1a252f;
+    }
+
+    .output-table tbody tr {
+        border-bottom-color: #495566;
+    }
+
+    .output-table tbody tr:hover {
+        background-color: #404f5f;
+    }
+
+    .output-table tbody tr:nth-child(even) {
+        background-color: #3d4d5c;
+    }
+
+    .output-table tbody tr:nth-child(even):hover {
+        background-color: #475665;
+    }
+
+    .output-table tbody td.col-number {
+        background-color: rgba(44, 62, 80, 0.3);
+        color: #95a5a6;
+    }
+
+    .output-table tbody tr.clause-number {
+        background-color: #495566;
+    }
+
+    .output-table tbody tr.clause-number:hover {
+        background-color: #556b7e;
+    }
+
+    .output-table tbody tr.clause-number td.col-content {
+        color: #ecf0f1;
+    }
+
+    .output-table tbody tr.leading-phrase {
+        background-color: #4a4322;
+    }
+
+    .output-table tbody tr.leading-phrase:hover {
+        background-color: #5a5530;
+    }
+
+    .output-table tbody tr.leading-phrase td.col-content {
+        color: #f39c12;
+    }
+
+    .output-table tbody tr.amendment-clause {
+        background-color: #5d3a35;
+    }
+
+    .output-table tbody tr.amendment-clause:hover {
+        background-color: #6d4a45;
+    }
+
+    .output-table tbody tr.amendment-clause td.col-content {
+        color: #e74c3c;
+    }
+
+    .output-table tbody tr.empty-row td {
+        background-color: #3d4d5c;
+    }
+
+    .output-table tbody tr.empty-row td.col-content {
+        color: #7f8c8d;
+    }
+
+    .table-wrapper {
+        border-color: #495566;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+        background: #495566;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background: #7f8c8d;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+        background: #95a5a6;
+    }
+}

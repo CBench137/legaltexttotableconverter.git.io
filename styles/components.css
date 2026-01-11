@@ -1,0 +1,264 @@
+/* ===========================
+   Buttons & Form Components
+   =========================== */
+
+/* Split Button */
+.split-button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+    width: 100%;
+    margin-top: 10px;
+}
+
+.split-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2980b9 0%, #1f618d 100%);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+.split-button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-light);
+}
+
+.split-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Browse Button */
+.browse-button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    font-size: 0.95em;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.browse-button:hover {
+    background-color: #2980b9;
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-1px);
+}
+
+.browse-button:active {
+    transform: translateY(0);
+}
+
+/* ===========================
+   Action Buttons
+   =========================== */
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.95em;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    flex: 1;
+    min-width: 140px;
+}
+
+.action-btn:hover:not(:disabled) {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+.action-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.copy-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.copy-btn:hover:not(:disabled) {
+    background-color: #2980b9;
+}
+
+.clear-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.clear-btn:hover:not(:disabled) {
+    background-color: #c0392b;
+}
+
+/* ===========================
+   Export Button & Dropdown
+   =========================== */
+
+.export-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 140px;
+}
+
+.export-btn {
+    background-color: #27ae60;
+    color: white;
+    width: 100%;
+}
+
+.export-btn:hover:not(:disabled) {
+    background-color: #229954;
+}
+
+.export-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: var(--shadow-heavy);
+    display: none;
+    z-index: 1000;
+    min-width: 200px;
+    margin-top: 5px;
+}
+
+.export-dropdown.show {
+    display: block;
+}
+
+.export-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid var(--bg-light);
+    font-size: 0.95em;
+}
+
+.export-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.export-dropdown a:hover {
+    background-color: var(--bg-light);
+    padding-left: 20px;
+}
+
+/* ===========================
+   File Upload Input
+   =========================== */
+
+input[type="file"] {
+    display: none;
+}
+
+.file-info {
+    font-size: 0.9em;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+.file-info.success {
+    color: var(--success-color);
+}
+
+.file-info.error {
+    color: var(--accent-color);
+}
+
+/* ===========================
+   Form Validation
+   =========================== */
+
+.form-error {
+    color: var(--accent-color);
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.form-success {
+    color: var(--success-color);
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+/* ===========================
+   Accessibility
+   =========================== */
+
+button:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+/* ===========================
+   Dark Mode Support
+   =========================== */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-light: #34495e;
+        --bg-very-light: #2c3e50;
+        --text-dark: #ecf0f1;
+        --text-light: #bdc3c7;
+        --border-color: #495566;
+    }
+
+    .split-button,
+    .browse-button,
+    .action-btn {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .input-textarea {
+        background-color: #34495e;
+        color: #ecf0f1;
+    }
+
+    .export-dropdown {
+        background-color: #34495e;
+        border-color: #495566;
+    }
+
+    .export-dropdown a {
+        color: #ecf0f1;
+    }
+
+    .export-dropdown a:hover {
+        background-color: #495566;
+    }
+}

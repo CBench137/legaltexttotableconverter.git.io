@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Text Splitter - Step 1: Split into Rows</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/table.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>Legal Text Splitter</h1>
+            <p class="subtitle">Step 1: Split into Rows</p>
+        </header>
+
+        <!-- File Upload Zone -->
+        <section class="input-section">
+            <div class="file-upload-zone" id="fileUploadZone">
+                <div class="upload-icon">📁</div>
+                <h3>Drag & Drop Files or Browse</h3>
+                <p>Supported: .txt, .docx, .pdf</p>
+                <input 
+                    type="file" 
+                    id="fileInput" 
+                    accept=".txt,.docx,.pdf"
+                    class="file-input-hidden"
+                >
+                <button class="browse-button" id="browseButton">Browse Files</button>
+            </div>
+
+            <!-- Text Area -->
+            <div class="textarea-wrapper">
+                <label for="inputTextArea">Paste Legal Text Here:</label>
+                <textarea 
+                    id="inputTextArea"
+                    class="input-textarea"
+                    placeholder="Paste your legal text (English or Devanagari)..."
+                ></textarea>
+            </div>
+
+            <!-- Split Button -->
+            <button class="split-button" id="splitButton">Split into Rows</button>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="action-buttons">
+            <button class="action-btn copy-btn" id="copyButton" disabled>
+                📋 Copy Output
+            </button>
+            
+            <div class="export-wrapper">
+                <button class="action-btn export-btn" id="exportButton" disabled>
+                    💾 Export
+                </button>
+                <div class="export-dropdown" id="exportDropdown">
+                    <a href="#" data-format="text">Export as Text (.txt)</a>
+                    <a href="#" data-format="csv">Export as CSV (.csv)</a>
+                    <a href="#" data-format="json">Export as JSON (.json)</a>
+                </div>
+            </div>
+
+            <button class="action-btn clear-btn" id="clearButton">
+                🗑️ Clear All
+            </button>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div class="loading-indicator" id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>Processing file...</p>
+        </div>
+
+        <!-- Status Message -->
+        <div class="status-message" id="statusMessage"></div>
+
+        <!-- Output Table Section -->
+        <section class="output-section">
+            <div class="table-header">
+                <h2>Split Output</h2>
+                <span class="row-counter" id="rowCounter">Total: 0 rows</span>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="output-table" id="outputTable">
+                    <thead>
+                        <tr>
+                            <th class="col-number">No.</th>
+                            <th class="col-content">Text Content</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <p>No rows yet. Paste text or upload a file to get started.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="scripts/devanagariParser.js"></script>
+    <script src="scripts/clauseNumberDetector.js"></script>
+    <script src="scripts/leadingPhraseDetector.js"></script>
+    <script src="scripts/textSplitter.js"></script>
+    <script src="scripts/rowGenerator.js"></script>
+    <script src="scripts/textExtractor.js"></script>
+    <script src="scripts/fileUploadHandler.js"></script>
+    <script src="scripts/tableRenderer.js"></script>
+    <script src="scripts/exportHandler.js"></script>
+    <script src="scripts/copyHandler.js"></script>
+    <script src="scripts/uiController.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
 
