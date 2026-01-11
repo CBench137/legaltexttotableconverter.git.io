@@ -38,6 +38,16 @@
         font-size: 0.9em;
     }
 
+    .options-section {
+        margin-top: 10px;
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .checkbox-label {
+        font-size: 0.9em;
+    }
+
     .action-buttons {
         gap: 10px;
     }

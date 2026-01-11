@@ -5,6 +5,7 @@
 
 const TableRenderer = {
     currentRows: [],
+        fullRows: [],
 
     /**
      * Render rows into the output table
@@ -61,6 +62,28 @@ const TableRenderer = {
 
         // Enable action buttons
         this.updateButtonStates();
+    },
+
+    /**
+     * Set the full rows (original rows as generated)
+     * @param {Array<Object>} rows
+     */
+    setFullRows(rows) {
+        this.fullRows = rows || [];
+    },
+
+    /**
+     * Renumber rows sequentially starting from 1 while preserving original number
+     * @param {Array<Object>} rows
+     * @returns {Array<Object>} renumbered rows
+     */
+    renumberRows(rows) {
+        return rows.map((r, idx) => {
+            const copy = Object.assign({}, r);
+            if (copy.originalNumber === undefined) copy.originalNumber = copy.number;
+            copy.number = idx + 1;
+            return copy;
+        });
     },
 
     /**
@@ -289,6 +312,37 @@ const TableRenderer = {
      */
     getStatistics() {
         return RowGenerator.getRowStatistics(this.currentRows);
+    },
+
+    /**
+     * Filter rows to remove empty rows
+     * @param {Array<Object>} rows - Row objects to filter
+     * @returns {Array<Object>} Filtered rows without empty rows
+     */
+    filterEmptyRows(rows) {
+        return rows.filter(row => !row.isEmpty);
+    },
+
+    /**
+     * Get rows with optional empty row filtering
+     * @param {boolean} collapseEmpty - Whether to filter out empty rows
+     * @param {boolean} renumber - Whether to renumber rows when collapsing
+     * @returns {Array<Object>} Rows (optionally filtered)
+     */
+    getDisplayRows(collapseEmpty = false, renumber = false) {
+        let rows = this.currentRows || [];
+        if (collapseEmpty) {
+            rows = this.filterEmptyRows(this.fullRows && this.fullRows.length ? this.fullRows : rows);
+            if (renumber) {
+                rows = this.renumberRows(rows);
+            }
+            return rows;
+        }
+        // If not collapsing, show fullRows if available
+        if (this.fullRows && this.fullRows.length) {
+            return this.fullRows;
+        }
+        return rows;
     }
 };
 

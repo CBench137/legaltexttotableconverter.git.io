@@ -24,14 +24,17 @@ const CopyHandler = {
      * Copy rows to clipboard
      */
     async copyToClipboard() {
-        const rows = TableRenderer.getRows();
+        const collapseCheckbox = document.getElementById('collapseEmptyRows');
+        const shouldCollapse = collapseCheckbox?.checked || false;
+        
+        const displayRows = TableRenderer.getDisplayRows(shouldCollapse, shouldCollapse);
 
-        if (!rows || rows.length === 0) {
+        if (!displayRows || displayRows.length === 0) {
             FileUploadHandler.showStatus('No rows to copy', 'error');
             return;
         }
 
-        const text = this.formatRowsForCopy(rows);
+        const text = this.formatRowsForCopy(displayRows);
 
         try {
             // Try modern Clipboard API first

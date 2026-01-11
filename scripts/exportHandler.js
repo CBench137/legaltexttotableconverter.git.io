@@ -23,12 +23,12 @@ const ExportHandler = {
             exportDropdown.classList.toggle('show');
         });
 
-        // Handle export options
+        // Handle export options (use explicit ExportHandler reference)
         exportLinks?.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const format = link.dataset.format;
-                this.exportRows(format);
+                ExportHandler.exportRows(format);
                 exportDropdown.classList.remove('show');
             });
         });
@@ -39,16 +39,27 @@ const ExportHandler = {
                 exportDropdown.classList.remove('show');
             }
         });
+
+        // Ensure export button enables when splitting completes
+        window.addEventListener('splitCompleted', (e) => {
+            const rows = e?.detail?.rows || TableRenderer.getRows();
+            if (rows && rows.length > 0) {
+                exportButton.disabled = false;
+            }
+        });
     },
 
     /**
      * Export rows in specified format
-     * @param {string} format - 'text', 'csv', or 'json'
+     * @param {string} format - 'text', 'csv', 'tsv', 'psv', or 'json'
      */
     exportRows(format) {
-        const rows = TableRenderer.getRows();
+        const collapseCheckbox = document.getElementById('collapseEmptyRows');
+        const shouldCollapse = collapseCheckbox?.checked || false;
+        
+        const displayRows = TableRenderer.getDisplayRows(shouldCollapse, shouldCollapse);
 
-        if (!rows || rows.length === 0) {
+        if (!displayRows || displayRows.length === 0) {
             FileUploadHandler.showStatus('No rows to export', 'error');
             return;
         }
@@ -59,19 +70,31 @@ const ExportHandler = {
 
         switch (format) {
             case 'text':
-                content = this.exportAsText(rows);
+                content = this.exportAsText(displayRows);
                 filename = 'legal-text-split.txt';
                 mimeType = 'text/plain';
                 break;
 
             case 'csv':
-                content = this.exportAsCsv(rows);
+                content = this.exportAsDelimited(displayRows, ',');
                 filename = 'legal-text-split.csv';
                 mimeType = 'text/csv';
                 break;
 
+            case 'tsv':
+                content = this.exportAsDelimited(displayRows, '\t');
+                filename = 'legal-text-split.tsv';
+                mimeType = 'text/tab-separated-values';
+                break;
+
+            case 'psv':
+                content = this.exportAsDelimited(displayRows, '|');
+                filename = 'legal-text-split.psv';
+                mimeType = 'text/plain';
+                break;
+
             case 'json':
-                content = this.exportAsJson(rows);
+                content = this.exportAsJson(displayRows);
                 filename = 'legal-text-split.json';
                 mimeType = 'application/json';
                 break;
@@ -120,6 +143,48 @@ const ExportHandler = {
         }
 
         return lines.join('\n');
+    },
+
+    /**
+     * Export rows as a delimited text (CSV/TSV/PSV)
+     * @param {Array<Object>} rows
+     * @param {string} delimiter - delimiter character (e.g. ',', '\t', '|')
+     * @returns {string}
+     */
+    exportAsDelimited(rows, delimiter) {
+        const lines = [];
+
+        // Header
+        const headers = ['Row Number', 'Text Content'];
+        lines.push(headers.join(delimiter));
+
+        for (const row of rows) {
+            const number = row.number;
+            const text = this.escapeDelimitedValue(row.text, delimiter);
+            lines.push([number, text].join(delimiter));
+        }
+
+        return lines.join('\n');
+    },
+
+    /**
+     * Escape a value for use in a delimited file (CSV/TSV/PSV)
+     * @param {string} value
+     * @param {string} delimiter
+     * @returns {string}
+     */
+    escapeDelimitedValue(value, delimiter) {
+        if (value === null || value === undefined) return '';
+        let v = String(value);
+        // Normalize newlines
+        v = v.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+        // Escape double quotes
+        v = v.replace(/"/g, '""');
+        // If value contains delimiter, newline or double quotes, wrap in double quotes
+        if (v.indexOf(delimiter) !== -1 || /[\n\"]/.test(v)) {
+            return '"' + v + '"';
+        }
+        return v;
     },
 
     /**

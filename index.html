@@ -46,6 +46,14 @@
 
             <!-- Split Button -->
             <button class="split-button" id="splitButton">Split into Rows</button>
+
+            <!-- Options Section -->
+            <div class="options-section">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="collapseEmptyRows" class="checkbox-input">
+                    <span class="checkbox-text">Collapse empty rows</span>
+                </label>
+            </div>
         </section>
 
         <!-- Action Buttons -->
@@ -61,6 +69,8 @@
                 <div class="export-dropdown" id="exportDropdown">
                     <a href="#" data-format="text">Export as Text (.txt)</a>
                     <a href="#" data-format="csv">Export as CSV (.csv)</a>
+                    <a href="#" data-format="tsv">Export as TSV (.tsv)</a>
+                    <a href="#" data-format="psv">Export as PSV (.psv)</a>
                     <a href="#" data-format="json">Export as JSON (.json)</a>
                 </div>
             </div>

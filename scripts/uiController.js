@@ -19,6 +19,7 @@ const UIController = {
         const splitButton = document.getElementById('splitButton');
         const clearButton = document.getElementById('clearButton');
         const inputTextArea = document.getElementById('inputTextArea');
+        const collapseEmptyRowsCheckbox = document.getElementById('collapseEmptyRows');
 
         if (splitButton) {
             splitButton.addEventListener('click', () => this.handleSplit());
@@ -31,6 +32,10 @@ const UIController = {
         if (inputTextArea) {
             inputTextArea.addEventListener('input', () => this.updateSplitButtonState());
             inputTextArea.addEventListener('keydown', (e) => this.handleTextAreaKeydown(e));
+        }
+
+        if (collapseEmptyRowsCheckbox) {
+            collapseEmptyRowsCheckbox.addEventListener('change', () => this.handleCollapseToggle());
         }
 
         // Listen for content changes
@@ -99,8 +104,14 @@ const UIController = {
             const rows = RowGenerator.generateRowsFromText(text);
             const enhancedRows = RowGenerator.enhanceRows(rows);
 
-            // Render table
-            TableRenderer.render(enhancedRows);
+            // Store full rows and compute display rows respecting collapse setting
+            TableRenderer.setFullRows(enhancedRows);
+            const collapseCheckbox = document.getElementById('collapseEmptyRows');
+            const shouldCollapse = collapseCheckbox?.checked || false;
+            const displayRows = TableRenderer.getDisplayRows(shouldCollapse, shouldCollapse);
+
+            // Render table (displayRows may be renumbered if collapse is on)
+            TableRenderer.render(displayRows);
 
             // Show success
             const stats = TableRenderer.getStatistics();
@@ -160,6 +171,37 @@ const UIController = {
 
         // Emit event
         this.emitEvent('contentCleared');
+    },
+
+    /**
+     * Handle collapse empty rows checkbox change
+     * Reapplies the current row filtering with new setting
+     */
+    handleCollapseToggle() {
+        const rows = TableRenderer.getRows();
+        if (!rows || rows.length === 0) {
+            return;
+        }
+
+        const collapseCheckbox = document.getElementById('collapseEmptyRows');
+        const shouldCollapse = collapseCheckbox?.checked || false;
+
+        // Get the filtered rows based on collapse setting (renumber when collapsing)
+        const displayRows = TableRenderer.getDisplayRows(shouldCollapse, shouldCollapse);
+
+        // Re-render table with filtered rows
+        TableRenderer.render(displayRows);
+
+        // Update statistics
+        const stats = RowGenerator.getRowStatistics(displayRows);
+        FileUploadHandler.showStatus(
+            `Display updated: ${displayRows.length} row${displayRows.length !== 1 ? 's' : ''}`,
+            'info',
+            2000
+        );
+
+        // Update copy/export buttons
+        this.updateActionButtonStates();
     },
 
     /**
@@ -232,11 +274,13 @@ const UIController = {
      */
     getState() {
         const inputTextArea = document.getElementById('inputTextArea');
+        const collapseEmptyRowsCheckbox = document.getElementById('collapseEmptyRows');
         const rows = TableRenderer.getRows();
 
         return {
             inputText: inputTextArea?.value || '',
             outputRows: rows,
+            collapseEmptyRows: collapseEmptyRowsCheckbox?.checked || false,
             statistics: rows ? RowGenerator.getRowStatistics(rows) : null,
             timestamp: new Date().toISOString()
         };
@@ -254,8 +298,20 @@ const UIController = {
             }
         }
 
+        if (state.collapseEmptyRows !== undefined) {
+            const collapseEmptyRowsCheckbox = document.getElementById('collapseEmptyRows');
+            if (collapseEmptyRowsCheckbox) {
+                collapseEmptyRowsCheckbox.checked = state.collapseEmptyRows;
+            }
+        }
+
         if (state.outputRows) {
-            TableRenderer.render(state.outputRows);
+            // Restore full rows into renderer, then render displayRows according to collapse setting
+            TableRenderer.setFullRows(state.outputRows);
+            const collapseCheckbox = document.getElementById('collapseEmptyRows');
+            const shouldCollapse = collapseCheckbox?.checked || false;
+            const displayRows = TableRenderer.getDisplayRows(shouldCollapse, shouldCollapse);
+            TableRenderer.render(displayRows);
         }
 
         this.updateInitialState();
