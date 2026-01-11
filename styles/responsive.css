@@ -48,6 +48,45 @@
         font-size: 0.9em;
     }
 
+    /* History Section */
+    .history-section {
+        margin-top: 15px;
+        padding: 15px;
+    }
+
+    .history-header h3 {
+        font-size: 1em;
+    }
+
+    .history-clear-btn {
+        padding: 5px 10px;
+        font-size: 0.8em;
+    }
+
+    .history-list {
+        max-height: 350px;
+    }
+
+    .history-item {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .history-item-preview {
+        font-size: 0.85em;
+    }
+
+    .history-item-meta {
+        font-size: 0.75em;
+        gap: 10px;
+    }
+
+    .history-btn-restore,
+    .history-btn-delete {
+        padding: 3px 6px;
+        font-size: 0.85em;
+    }
+
     .action-buttons {
         gap: 10px;
     }

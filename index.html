@@ -54,6 +54,20 @@
                     <span class="checkbox-text">Collapse empty rows</span>
                 </label>
             </div>
+
+            <!-- History Section -->
+            <div class="history-section" id="historyContainer">
+                <div class="history-header">
+                    <h3>📜 Recent History</h3>
+                    <button class="history-clear-btn" id="historyLargeScreen" title="Clear all history">Clear All</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <!-- History items will be inserted here -->
+                </div>
+                <div class="no-history-message" id="noHistoryMessage">
+                    <p>No history yet. Your recent splits will appear here.</p>
+                </div>
+            </div>
         </section>
 
         <!-- Action Buttons -->
@@ -86,7 +100,7 @@
             <p>Processing file...</p>
         </div>
 
-        <!-- Status Message -->
+        <!-- Status Message --> 
         <div class="status-message" id="statusMessage"></div>
 
         <!-- Output Table Section -->
@@ -132,6 +146,7 @@
     <script src="scripts/tableRenderer.js"></script>
     <script src="scripts/exportHandler.js"></script>
     <script src="scripts/copyHandler.js"></script>
+    <script src="scripts/historyManager.js"></script>
     <script src="scripts/uiController.js"></script>
     <script src="scripts/main.js"></script>
 </body>

@@ -344,3 +344,155 @@ body {
 .checkbox-text {
     font-weight: 500;
 }
+
+/* ===========================
+   History Section
+   =========================== */
+
+.history-section {
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.history-section.empty {
+    opacity: 0.7;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.history-header h3 {
+    font-size: 1.1em;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.history-clear-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.85em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.history-clear-btn:hover {
+    background-color: #c0392b;
+    box-shadow: var(--shadow-light);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 10px;
+}
+
+.history-item:hover {
+    background-color: var(--bg-very-light);
+    box-shadow: var(--shadow-light);
+    border-color: var(--secondary-color);
+}
+
+.history-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.history-item-preview {
+    font-size: 0.9em;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.history-item-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 0.8em;
+    color: var(--text-light);
+    gap: 15px;
+}
+
+.history-item-rows {
+    font-weight: 500;
+}
+
+.history-item-time {
+    white-space: nowrap;
+}
+
+.history-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.history-btn-restore,
+.history-btn-delete {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+}
+
+.history-btn-restore {
+    color: var(--success-color);
+}
+
+.history-btn-restore:hover {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.history-btn-delete {
+    color: var(--accent-color);
+}
+
+.history-btn-delete:hover {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.no-history-message {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-light);
+    font-size: 0.95em;
+}
+
+.no-history-message p {
+    margin: 0;
+}
+

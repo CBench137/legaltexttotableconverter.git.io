@@ -20,6 +20,7 @@ const UIController = {
         const clearButton = document.getElementById('clearButton');
         const inputTextArea = document.getElementById('inputTextArea');
         const collapseEmptyRowsCheckbox = document.getElementById('collapseEmptyRows');
+        const historyClearBtn = document.getElementById('historyLargeScreen');
 
         if (splitButton) {
             splitButton.addEventListener('click', () => this.handleSplit());
@@ -36,6 +37,14 @@ const UIController = {
 
         if (collapseEmptyRowsCheckbox) {
             collapseEmptyRowsCheckbox.addEventListener('change', () => this.handleCollapseToggle());
+        }
+
+        if (historyClearBtn) {
+            historyClearBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to clear all history?')) {
+                    HistoryManager.clearHistory();
+                }
+            });
         }
 
         // Listen for content changes
@@ -119,6 +128,14 @@ const UIController = {
                            `(${stats.clauseNumbers} clause numbers, ` +
                            `${stats.leadingPhrases} leading phrases)`;
             FileUploadHandler.showStatus(message, 'success', 5000);
+
+            // Save to history
+            HistoryManager.addHistoryItem({
+                text: text,
+                rows: enhancedRows,
+                rowCount: stats.totalRows,
+                timestamp: new Date().toISOString()
+            });
 
             // Emit event
             this.emitEvent('splitCompleted', { rows: enhancedRows, stats });
